@@ -56,7 +56,6 @@ func GetUser(c *fiber.Ctx) error {
 func CreateUser(c *fiber.Ctx) error {
 	type NewUser struct {
 		Username string `json:"username"`
-		Email    string `json:"email"`
 	}
 
 	db := database.DB
@@ -78,7 +77,6 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	newUser := NewUser{
-		Email:    user.Email,
 		Username: user.Username,
 	}
 
