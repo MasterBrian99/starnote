@@ -24,3 +24,4 @@ frontend/build-ssr
 *.njsproj
 *.sln
 *.sw?
+test

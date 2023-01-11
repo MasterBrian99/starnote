@@ -24,6 +24,10 @@ func SetupRoutes(app *fiber.App) {
 	user.Patch("/:id", middleware.Protected(), handler.UpdateUser)
 	user.Delete("/:id", middleware.Protected(), handler.DeleteUser)
 
+	// Github Accounts
+	acc := api.Group("/github")
+	acc.Get("/", middleware.Protected(), handler.AddAccount)
+
 	// Product
 	// product := api.Group("/product")
 	// product.Get("/", handler.GetAllProducts)

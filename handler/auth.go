@@ -126,3 +126,11 @@ func Login(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{"status": "success", "message": "Success login", "data": t})
 }
+
+func GetCurrentUser(t *jwt.Token) int {
+
+	claims := t.Claims.(jwt.MapClaims)
+	uid := int(claims["user_id"].(float64))
+
+	return uid
+}

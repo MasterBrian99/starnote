@@ -19,6 +19,6 @@ func ConnectDB() {
 	}
 
 	fmt.Println("Connection Opened to Database")
-	DB.AutoMigrate(&model.User{})
+	DB.AutoMigrate(&model.User{}, &model.GithubAccount{})
 	fmt.Println("Database Migrated")
 }
