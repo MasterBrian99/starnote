@@ -16,16 +16,26 @@ func main() {
 }
 func loadDatabase() {
 	database.Connect()
-	database.Database.AutoMigrate(&model.User{})
+	database.Database.AutoMigrate(&model.User{}, &model.Account{})
 }
 
 func serveApplication() {
-	router := gin.Default()
 
-	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/register", controller.Register)
-	publicRoutes.POST("/login", controller.Login)
+	r := gin.Default()
+	routes := r.Group("/api")
+	auth := routes.Group("/auth")
+	{
+		auth.POST("/", controller.Register)
+		auth.POST("/login", controller.Login)
+	}
 
-	router.Run(":8000")
+	accounts := routes.Group("github")
+	{
+		accounts.POST("add", controller.AddNewAccount)
+	}
+
+	r.Run(":9000")
 	fmt.Println("Server running on port 8000")
 }
+
+// nodemon --exec go run main.go --signal SIGTERM

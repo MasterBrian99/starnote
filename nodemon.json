@@ -1,0 +1,6 @@
+{
+    "ignore": [
+        "*test_db",
+        "**/fixtures/**"
+    ]
+}
