@@ -8,7 +8,6 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocalStrategy } from './local.strategy';
 
-console.log(process.env);
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),

@@ -1,5 +1,7 @@
 import { BaseEntity } from './base.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { GithubAccountsEntity } from './github-accounts.entity';
+import { JoinColumn } from 'typeorm';
 
 @Entity({ name: 'user' })
 export class UserEntity extends BaseEntity {
@@ -11,4 +13,8 @@ export class UserEntity extends BaseEntity {
 
   @Column({ nullable: true, type: 'varchar', unique: true })
   email: string;
+
+  @OneToMany(() => GithubAccountsEntity, (account) => account.user)
+  @JoinColumn({ name: 'user_id' })
+  accounts: GithubAccountsEntity[];
 }
