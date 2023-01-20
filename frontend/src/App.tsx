@@ -1,8 +1,17 @@
+import { ThemeProvider } from '@primer/react';
+import { BaseStyles } from '@primer/react';
+
+import Router from './router/Router';
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <>
+      <ThemeProvider colorMode="auto">
+        <BaseStyles>
+          <Router />
+        </BaseStyles>
+      </ThemeProvider>
+    </>
   );
 }
 
