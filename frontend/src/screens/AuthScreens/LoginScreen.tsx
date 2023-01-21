@@ -1,8 +1,33 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, FormControl, Link, TextInput } from '@primer/react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import AuthLayout from '../../layouts/AuthLayout';
 
+type FormInputs = {
+  username: string;
+  password: string;
+};
+
+const schema = yup
+  .object({
+    username: yup
+      .string()
+      .required()
+      .matches(/^\S+$/, { message: 'Username should not contain spaces' }),
+    password: yup.string().required(),
+  })
+  .required();
 const LoginScreen = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInputs>({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data: FormInputs) => console.log(data);
   return (
     <AuthLayout title=" Sign in to Starnote">
       <Box
@@ -18,33 +43,50 @@ const LoginScreen = () => {
           width: '20rem',
         }}
       >
-        <FormControl sx={{ marginTop: '1rem' }} required>
-          <FormControl.Label>Username</FormControl.Label>
-          <TextInput
-            size={'medium'}
-            aria-label="username"
-            name="username"
-            placeholder="Username"
-            autoComplete="username"
-            sx={{ width: '100%' }}
-          />
-        </FormControl>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl sx={{ marginTop: '1rem' }} required>
+            <FormControl.Label>Username</FormControl.Label>
+            <TextInput
+              size={'medium'}
+              aria-label="username"
+              placeholder="Username"
+              autoComplete="username"
+              sx={{ width: '100%' }}
+              {...register('username', { required: true })}
+            />
 
-        <FormControl sx={{ marginTop: '1rem' }} required>
-          <FormControl.Label>Password</FormControl.Label>
-          <TextInput
-            aria-label="password"
-            name="password"
-            placeholder="Password"
-            autoComplete="password"
-            type={'password'}
-            sx={{ width: '100%' }}
-          />
-        </FormControl>
+            {errors.username ? (
+              <FormControl.Validation variant="error">
+                {errors.username.message}
+              </FormControl.Validation>
+            ) : (
+              <></>
+            )}
+          </FormControl>
 
-        <Button variant="primary" sx={{ marginTop: '1rem' }}>
-          Sign in
-        </Button>
+          <FormControl sx={{ marginTop: '1rem' }} required>
+            <FormControl.Label>Password</FormControl.Label>
+            <TextInput
+              aria-label="password"
+              placeholder="Password"
+              autoComplete="password"
+              type={'password'}
+              {...register('password', { required: true })}
+              sx={{ width: '100%' }}
+            />
+            {errors.password ? (
+              <FormControl.Validation variant="error">
+                {errors.password.message}
+              </FormControl.Validation>
+            ) : (
+              <></>
+            )}
+          </FormControl>
+
+          <Button variant="primary" sx={{ marginTop: '1rem' }} type={'submit'}>
+            Sign in
+          </Button>
+        </form>
       </Box>
       <Box
         mt={2}

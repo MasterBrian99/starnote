@@ -38,7 +38,12 @@ export class AuthService {
       user.email = dto.email;
       const salt = await bcrypt.genSalt();
       user.password = await bcrypt.hash(dto.password, salt);
-      return await this.userRepository.save(user);
+      const payload = { username: dto.username };
+      return {
+        access_token: this.jwt.sign(payload, {
+          secret: process.env.JWT_SECRET,
+        }),
+      };
     } catch (e) {
       this.logger.error(e);
       throw new InternalServerErrorException(
