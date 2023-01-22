@@ -2,9 +2,9 @@ import React from 'react';
 import { RequireAuth } from 'react-auth-kit';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import MainLayout from '../layouts/MainLayout';
 import LoginScreen from '../screens/AuthScreens/LoginScreen';
 import SignupScreen from '../screens/AuthScreens/SignupScreen';
-import MainScreen from '../screens/MainScreen/MainScreen';
 
 const Router = () => {
   return (
@@ -15,7 +15,7 @@ const Router = () => {
             path=""
             element={
               <RequireAuth loginPath={'/auth/login'}>
-                <MainScreen />
+                <MainLayout />
               </RequireAuth>
             }
           ></Route>
